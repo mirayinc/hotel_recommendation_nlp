@@ -24,3 +24,6 @@ Veri seti, altı farklı ülkeden otel yorumlarını içerir:
 
 Bu proje, [Makine Öğrenmesi ile Otel Öneri Sistemi](https://thecleverprogrammer.com/2021/02/13/hotel-recommendation-system-with-machine-learning/) adlı çalışmadan esinlenilmiştir.
 Kodlar yazılırken yardım alınmmıştır.
+
+Kullanıcıya verilebilecek son haline
+https://huggingface.co/spaces/Mirayinc/hotel_recommendation_system ile ulaşabilirsiniz.
