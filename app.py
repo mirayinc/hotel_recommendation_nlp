@@ -1,4 +1,3 @@
-
 import os
 import ssl
 import nltk
@@ -21,7 +20,7 @@ nltk.download("stopwords")
 nltk.download("punkt")
 nltk.download("omw-1.4")
 # Opsiyonel: Bazı durumlarda ihtiyaç duyulabilir
-# nltk.download('punkt_tab')
+nltk.download('punkt_tab')
 
 ###################################
 # 1) Veri Yükleme
@@ -36,8 +35,8 @@ data = pd.read_csv(dosya_yolu)
 ###################################
 
 # "United Kingdom" ifadesini "UK" ile değiştiriyoruz
-data.Hotel_Address = data.Hotel_Address.str.replace("United Kingdom", "UK")
-data.Hotel_Address = data.Hotel_Address.str.replace("Kingdom", "UK")
+data.Hotel_Address = data.Hotel_Address.str.replace("United Kingdom", "UK", regex= False)
+data.Hotel_Address = data.Hotel_Address.str.replace("Kingdom", "UK", regex=False)
 
 # Adresin son kelimesini ülke olarak çekiyoruz
 data["countries"] = data.Hotel_Address.apply(lambda x: x.split(' ')[-1])
@@ -134,7 +133,7 @@ def predict_hotels(location, description):
     Çıktıyı metinsel bir tablo (Markdown) şeklinde geri döndürür.
     """
     df_results = recommend_hotel(location, description)
-    return df_results.to_markdown(index=False)
+    return df_results
 
 ###################################
 # 5) Gradio Blocks Arayüzü
@@ -151,16 +150,16 @@ with gr.Blocks() as demo:
     with gr.Row():
         location_input = gr.Textbox(
             label="Konum (ülke)",
-            placeholder="Örneğin: uk, france, spain vb."
+            placeholder="uk, france, spain, italy, netherlands or austria"
         )
         description_input = gr.Textbox(
             label="Seyahat Açıklaması",
             placeholder="Örneğin: honeymoon, business trip, family vacation..."
         )
 
-    output_box = gr.Textbox(
-        label="Önerilen Oteller (Tablo)",
-        lines=15
+    output_box = gr.Dataframe(
+        label="Önerilen Oteller",
+        headers=["Hotel_Name", "Average_Score", "Hotel_Address"]
     )
     submit_btn = gr.Button("Öneri Al")
 
